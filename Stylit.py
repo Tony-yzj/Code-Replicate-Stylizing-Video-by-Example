@@ -1,11 +1,18 @@
-import cv2
-import math
 import numpy as np
 import random
-import multiprocessing as mp
+
 w = 5
 interation = 4
 channel = 1
+
+"""
+A original pic
+A' style pic
+B original pic
+
+B' to calculate
+
+"""
 
 def stylit(A, B, Aprime, Bprime):
     avg = np.zeros([3])
@@ -74,16 +81,6 @@ def nnf_init(A, B, Aprime, Bprime, u):
     Bcols = B.shape[2]
 
     nnf = np.zeros([Arows, Acols, 3])
-
-    # procs = []
-    # for p in range(4):
-    #     procs.append(mp.Process(target=task_init, args=(p*int(Arows/4), (p+1)*int(Arows/4), nnf, A, B, Aprime, Bprime, u)))
-    
-    # for proc in procs:
-    #     proc.start()
-
-    # for proc in procs:
-    #     proc.join()
     
     for i in range(Arows):
         for j in range(Acols):
@@ -198,17 +195,7 @@ def calculate(A, B, Aprime, Bprime, A_x, A_y, B_x, B_y, u, best=float("inf")):
     Bcols = B.shape[2]
     cost = 0
     cnt = 0
-    # for i in range(A_x-w//2, A_x+w//2+1):
-    #     for j in range(A_y-w//2, A_y+w//2+1):
-    #         if i < 0 or j < 0 or i > Arows-1 or j > Acols-1:
-    #             continue
-    #         if B_x-A_x+i < 0 or B_y-A_y+j < 0 or B_x-A_x+i > Brows-1 or B_y-A_y+j > Bcols-1:
-    #             continue
-    #         cnt += 1
-    #         cost += E(A[i, j], B[int(B_x-A_x+i), int(B_y-A_y+j)], Aprime[i, j], Bprime[int(B_x-A_x+i), int(B_y-A_y+j)], u)
-            
-    #         if cnt > 12 and cost/(cnt*2) > best:
-    #             return float("inf")
+
     xmin = int(min(w//2, A_x, B_x))
     xmax = int(min(w//2, Arows-A_x-1, Brows-B_x-1)+1)
     ymin = int(min(w//2, A_y, B_y))
@@ -220,25 +207,5 @@ def calculate(A, B, Aprime, Bprime, A_x, A_y, B_x, B_y, u, best=float("inf")):
     cost /= (xmin+xmax)*(ymin+ymax)
     return cost
 
-# def argmin(A, B, Aprime, Bprime, x, y):
-#     temp = float ("inf")
-#     min = float ("inf")
-#     Arows = A.shape[0]
-#     Acols = A.shape[1]
-#     for i in range(Arows):
-#         for j in range(Acols):
-#             temp = E(A[i,j], B[x,y], Aprime[i,j], Bprime[x,y], 100)
-#             if temp < min:
-#                 min = temp
-#                 min_point = i,j
-    
-#     return min_point
-
 def E(a, b, aprime, bprime, u):
-    # diff_a = [aprime[i].astype(np.float32)-bprime[i].astype(np.float32) for i in range(0, len(a))]
-    # diff_b = [a[i].astype(np.float32)-b[i].astype(np.float32) for i in range(0, len(b))]
-
-    # return (diff_a[0]*diff_a[0]+diff_a[1]*diff_a[1]+diff_a[2]*diff_a[2])+u*(diff_b[0]*diff_b[0]+diff_b[1]*diff_b[1]+diff_b[2]*diff_b[2])
-
-    # x = np.sum(u*(a.astype("float32")-b.astype("float32"))**2+(aprime.astype("float32")-bprime.astype("float32"))**2)
     return np.sum(u*(a.astype("float32")-b.astype("float32"))**2+(aprime.astype("float32")-bprime.astype("float32"))**2)

@@ -1,0 +1,3 @@
+D:/zhonghao/CG2023/Code-Replicate-Stylizing-Video-by-Example/mask/cmake-build-debug/CMakeFiles/mask.dir
+D:/zhonghao/CG2023/Code-Replicate-Stylizing-Video-by-Example/mask/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/zhonghao/CG2023/Code-Replicate-Stylizing-Video-by-Example/mask/cmake-build-debug/CMakeFiles/rebuild_cache.dir
